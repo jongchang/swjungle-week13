@@ -14,7 +14,7 @@ const options = {
             //     url: "http://localhost:8000", // Update the URL to include the protocol
             // },
             {
-                url: "http://52.78.125.48",
+                url: "http://52.78.125.48:8000",
             }
         ],
     },

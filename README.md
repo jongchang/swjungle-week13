@@ -4,6 +4,7 @@
 - Swaager
 
 ## ERD   
+![drawSQL-copy-of-copy-of-sequelize-relation-export-2023-11-06](https://github.com/jongchang/swjungle-week13/assets/110075512/c5b8fcf1-f8f2-4c78-9100-3744d23dacb7)
 
 ## DemoURL
 http://52.78.125.48/api-docs/   

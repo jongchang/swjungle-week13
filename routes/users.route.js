@@ -13,6 +13,47 @@ const jwt = require("jsonwebtoken");
  * 데이터베이스에 존재하는 닉네임을 입력한 채 회원가입 버튼을 누른 경우,
  * "중복된 닉네임입니다." 라는 에러메세지를 response에 포함하기
  */
+
+
+
+/**
+ * @swagger
+ * /api/users:
+ *   post:
+ *     summary: 회원 가입
+ *     description: 새로운 사용자를 생성합니다.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - nickname
+ *               - password
+ *               - confirmPassword
+ *             properties:
+ *               nickname:
+ *                 type: string
+ *                 description: 유저 고유 닉네임 (3~10자, 알파벳 대소문자와 숫자)
+ *               password:
+ *                 type: string
+ *                 description: 비밀번호 (4~10자)
+ *               confirmPassword:
+ *                 type: string
+ *                 description: 비밀번호 확인
+ *     responses:
+ *       '201':
+ *         description: 회원가입이 완료되었습니다.
+ *       '400':
+ *         description: "요청의 형식이 잘못되었습니다. (예: 비밀번호나 닉네임 형식 불일치)"
+ *       '401':
+ *         description: 비밀번호와 비밀번호 확인이 일치하지 않습니다.
+ *       '409':
+ *         description: 닉네임이 이미 존재하거나 비밀번호가 닉네임을 포함합니다.
+ */
 router.post("/users", async (req, res) => {
     const { nickname, password, confirmPassword } = req.body;
 
@@ -23,7 +64,7 @@ router.post("/users", async (req, res) => {
 
         // 닉네임 형식이 비정상적인 경우
         if (!nicknamePattern.test(nickname)) {
-            res.status(412).json({
+            res.status(400).json({
                 errorMessage: "닉네임의 형식이 일치하지 않습니다.",
             });
             return;
@@ -31,7 +72,7 @@ router.post("/users", async (req, res) => {
 
         // 비밀번호가 일치하지 않는 경우
         if (password !== confirmPassword) {
-            res.status(412).json({
+            res.status(401).json({
                 errorMessage: "패스워드가 일치하지 않습니다.",
             });
             return;
@@ -39,7 +80,7 @@ router.post("/users", async (req, res) => {
 
         // 비밀번호 형식이 비정상적인 경우
         if (!passwordLengthRegex.test(password)) {
-            res.status(412).json({
+            res.status(400).json({
                 errorMessage: "패스워드 형식이 일치하지 않습니다.",
             });
             return;
@@ -47,7 +88,7 @@ router.post("/users", async (req, res) => {
 
         // 비밀번호에 닉네임이 포함되어있는 경우
         if (nicknameRegex.test(password)) {
-            res.status(412).json({
+            res.status(409).json({
                 errorMessage: "패스워드에 닉네임이 포함되어 있습니다.",
             });
             return;
@@ -56,7 +97,7 @@ router.post("/users", async (req, res) => {
         // 닉네임이 중복된 경우
         const isExistUser = await Users.findOne({ where: { nickname } });
         if (isExistUser) {
-            return res.status(412).json({ errorMessage: "중복된 닉네임입니다." });
+            return res.status(409).json({ errorMessage: "중복된 닉네임입니다." });
         }
 
         // Users 테이블에 사용자를 추가합니다.

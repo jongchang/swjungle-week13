@@ -10,6 +10,8 @@ const router = express.Router();
  * @request 제목, 작성내용 입력 (작성자명, 비밀번호 X)
  * @note 토큰을 검사하여, 유효한 토큰일 경우에만 게시글 작성 가능
  */
+
+
 router.post("/posts", authMiddleware, async (req, res) => {
     const { userId } = res.locals.user;
     const { title, content } = req.body;

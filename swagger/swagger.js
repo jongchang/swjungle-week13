@@ -10,12 +10,12 @@ const options = {
             description: "Test API with express"
         },
         servers: [
-            {
-                url: "http://localhost:8000", // Update the URL to include the protocol
-            },
             // {
-            //     url: "http://52.78.125.48",
-            // }
+            //     url: "http://localhost:8000", // Update the URL to include the protocol
+            // },
+            {
+                url: "http://52.78.125.48",
+            }
         ],
     },
     apis: ["./routes/users.route.js", "./routes/posts.route.js", "./routes/comments.route.js"], // Swagger file integration

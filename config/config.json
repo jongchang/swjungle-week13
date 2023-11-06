@@ -10,14 +10,14 @@
     "username": "root",
     "password": null,
     "database": "database_test",
-    "host": "52.79.105.38",
+    "host": "13.125.238.183",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
     "password": null,
     "database": "database_production",
-    "host": "52.79.105.38",
+    "host": "13.125.238.183",
     "dialect": "mysql"
   }
 }

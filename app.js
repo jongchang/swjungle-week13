@@ -5,10 +5,10 @@ const postsRouter = require("./routes/posts.route");
 const commentsRouter = require("./routes/comments.route");
 
 const app = express();
-const PORT = 3019;
+const PORT = 8000;
 
 app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 // app.use(express.static("assets"));
 app.use(cookieParser());
 app.use('/api', [usersRouter, postsRouter, commentsRouter]);

@@ -95,9 +95,9 @@ router.get("/posts/:postId/comments", async (req, res) => {
  *           schema:
  *             type: object
  *             required:
- *               - content
+ *               - comment
  *             properties:
- *               content:
+ *               comment:
  *                 type: string
  *                 description: 댓글 내용
  *     responses:

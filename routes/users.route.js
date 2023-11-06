@@ -19,16 +19,13 @@ router.get("/", (req, res) => {
  * "중복된 닉네임입니다." 라는 에러메세지를 response에 포함하기
  */
 
-
-
 /**
  * @swagger
  * /api/users:
  *   post:
- *     summary: 회원 가입
- *     description: 새로운 사용자를 생성합니다.
- *     tags:
- *       - Users
+ *     summary: 회원 가입 API
+ *     description: 새로운 사용자 생성
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
@@ -42,10 +39,10 @@ router.get("/", (req, res) => {
  *             properties:
  *               nickname:
  *                 type: string
- *                 description: 유저 고유 닉네임 (3~10자, 알파벳 대소문자와 숫자)
+ *                 description: 유저 고유 닉네임 (3자 이상, 알파벳 대소문자와 숫자)
  *               password:
  *                 type: string
- *                 description: 비밀번호 (4~10자)
+ *                 description: 비밀번호 (4자 이상)
  *               confirmPassword:
  *                 type: string
  *                 description: 비밀번호 확인
@@ -131,10 +128,9 @@ router.post("/users", async (req, res) => {
  * @swagger
  * /api/login:
  *   post:
- *     summary: 로그인
- *     description: 로그인 API
- *     tags:
- *       - Users
+ *     summary: 로그인 API
+ *     description: 로그인 합니다.
+ *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
@@ -147,14 +143,14 @@ router.post("/users", async (req, res) => {
  *             properties:
  *               nickname:
  *                 type: string
- *                 description: 유저 고유 닉네임 (3~10자, 알파벳 대소문자와 숫자)
+ *                 description: 유저 고유 닉네임 (3자 이상, 알파벳 대소문자와 숫자)
  *               password:
  *                 type: string
- *                 description: 비밀번호 (4~10자)
+ *                 description: 비밀번호 (4자 이상)
  *     responses:
- *       '200':
- *         description: 로그인 성공!
- *       '412':
+ *       "200":
+ *         description: 로그인 성공
+ *       "412":
  *         description: 닉네임 또는 패스워드를 확인해주세요.
  */
 router.post("/login", async (req, res) => {

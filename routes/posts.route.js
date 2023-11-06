@@ -11,7 +11,46 @@ const router = express.Router();
  * @note 토큰을 검사하여, 유효한 토큰일 경우에만 게시글 작성 가능
  */
 
-
+/**
+ * @swagger
+ * /api/posts:
+ *   post:
+ *     summary: 게시글 작성 API
+ *     description: "토큰을 검사하여, 유효한 토큰일 경우에만 게시글 작성 가능"
+ *     tags:
+ *       - Posts
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - content
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: 제목
+ *               content:
+ *                 type: string
+ *                 description: 작성 내용
+ *     responses:
+ *       '201':
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: json
+ *                   example: 
+ *                        { 
+ *                           UserId: userId,
+ *                           title: "제목", 
+ *                           content: "작성 내용" 
+ *                       }    
+ */
 router.post("/posts", authMiddleware, async (req, res) => {
     const { userId } = res.locals.user;
     const { title, content } = req.body;
@@ -25,9 +64,42 @@ router.post("/posts", authMiddleware, async (req, res) => {
     return res.status(201).json({ data: post });
 });
 
+
+
 /**
  * @brief 전체 게시글 목록 조회 API 
  * @response 제목, 작성자명, 작성날짜
+ */
+/**
+ * @swagger 
+ * /api/posts:
+ *   get: 
+ *     summary: "전체 게시글 목록 조회 API"
+ *     description: "전체 게시글 목록을 작성 날짜 최신순으로 조회"
+ *     tags:
+ *       - Posts
+ *     responses:
+ *       '200':
+ *         description: "Successful operation"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   postId:
+ *                     type: integer
+ *                   title:
+ *                     type: string
+ *                   createdAt:
+ *                     type: string
+ *                   User:
+ *                     type: object
+ *                     properties:
+ *                       nickname:
+ *                         type: string
+ * 
  */
 router.get("/posts", async (req, res) => {
     const posts = await Posts.findAll({
@@ -50,6 +122,47 @@ router.get("/posts", async (req, res) => {
  * @brief 게시글 조회 API
  * @response 제목, 작성자명, 작성날짜, 작성내용
  */
+
+/**
+ * @swagger 
+ * /api/posts/{postId}:
+ *   get: 
+ *     summary: "게시글 조회 API"
+ *     description: "해당 게시글을 상세 조회"
+ *     tags:
+ *       - Posts
+ *     parameters:
+ *       - in: path
+ *         name: postId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: 해당 게시글 ID
+ *     responses:
+ *       '200':
+ *         description: "Successful operation"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 postId:
+ *                   type: integer
+ *                 title:
+ *                   type: string
+ *                 content:
+ *                   type: string
+ *                 createdAt:
+ *                   type: string
+ *                 updatedAt:
+ *                   type: string
+ *                 User:
+ *                   type: object
+ *                   properties:
+ *                     nickname:
+ *                       type: string
+ */
+
 router.get("/posts/:postId", async (req, res) => {
     const { postId } = req.params;
     const post = await Posts.findOne({
@@ -70,6 +183,46 @@ router.get("/posts/:postId", async (req, res) => {
 /**
  * @brief 게시글 수정 API
  * @note 토큰을 검사하여, 해당 사용자가 작성한 게시글만 수정 가능
+ */
+/**
+ * @swagger
+ * /api/posts/{postId}:
+ *   put:
+ *     summary: 게시글 수정 API
+ *     description: "로그인 토큰을 검사하여, 해당 사용자가 작성한 게시글만 수정 가능"
+ *     parameters:
+ *        - in: path
+ *          name: postId
+ *          required: true
+ *          schema:
+ *            type: integer
+ *          description: Unique identifier of the post
+ *     tags:
+ *       - Posts
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - content
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: 게시글 수정 제목
+ *               content:
+ *                 type: string
+ *                 description: 게시글 수정 내용 
+ * 
+ *     responses:
+ *       '200':
+ *         description: "게시글이 수정되었습니다."
+ *       '404':
+ *         description: "게시글이 존재하지 않습니다."
+ *       '401':
+ *         description: "권한이 없습니다."
  */
 router.put("/posts/:postId", authMiddleware, async (req, res) => {
     const { postId } = req.params;
@@ -95,13 +248,39 @@ router.put("/posts/:postId", authMiddleware, async (req, res) => {
         }
     );
 
-    return res.status(200).json({ data: "게시글이 수정되었습니다." });
+    return res.status(200).json({ message: "게시글이 수정되었습니다." });
 });
 
 
 /**
  * @brief 게시글 삭제 API
  * @note 토큰을 검사하여, 해당 사용자가 작성한 게시글만 삭제 가능
+ */
+/**
+ * @swagger
+ * /api/posts/{postId}:
+ *   delete:
+ *     summary: 게시글 삭제 API
+ *     description: "로그인 토큰을 검사하여, 해당 사용자가 작성한 게시글만 삭제 가능"
+ *     parameters:
+ *        - in: path
+ *          name: postId
+ *          required: true
+ *          schema:
+ *            type: integer
+ *          description: Unique identifier of the post
+ *     tags:
+ *       - Posts
+ *     requestBody:
+ *       required: false
+ * 
+ *     responses:
+ *       '200':
+ *         description: "게시글이 삭제되었습니다."
+ *       '404':
+ *         description: "게시글이 존재하지 않습니다."
+ *       '401':
+ *         description: "권한이 없습니다."
  */
 router.delete("/posts/:postId", authMiddleware, async (req, res) => {
     const { postId } = req.params;
@@ -123,7 +302,7 @@ router.delete("/posts/:postId", authMiddleware, async (req, res) => {
         }
     });
 
-    return res.status(200).json({ data: "게시글이 삭제되었습니다." });
+    return res.status(200).json({ message: "게시글이 삭제되었습니다." });
 });
 
 

@@ -7,17 +7,20 @@ const options = {
         info: {
             version: "1.0.0",
             title: "Test API - Jonghyeon",
-            description: 
-                "Test API with express"
+            description: "Test API with express"
         },
         servers: [
+            // {
+            //     url: "http://localhost:8000", // Update the URL to include the protocol
+            // },
             {
-                url: "52.78.125.48", //요청 URL
-            },
+                url: "52.78.125.48",
+            }
         ],
     },
-    apis: ["./routes/users.route.js", "./routes/posts.route.js", "./routes/comments.route.js"], //Swagger 파일 연동
-}
+    apis: ["./routes/users.route.js", "./routes/posts.route.js", "./routes/comments.route.js"], // Swagger file integration
+};
+
 const specs = swaggerJsdoc(options);
 
 module.exports = { swaggerUi, specs };

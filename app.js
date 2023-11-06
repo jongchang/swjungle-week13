@@ -5,7 +5,7 @@ const postsRouter = require("./routes/posts.route");
 const commentsRouter = require("./routes/comments.route");
 
 const app = express();
-const PORT = 3000;
+const PORT = 3019;
 
 app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));

@@ -19,7 +19,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('게시판 첫페이지 - 장종현');
 });
 
 app.listen(PORT, () => {

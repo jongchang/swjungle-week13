@@ -4,6 +4,11 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 
 
+router.get("/", (req, res) => {
+    res.send("Hi jonghyen");
+  });
+
+
 /**
  * @brief 회원가입 API
  * @request 닉네임, 비밀번호, 비밀번호 확인

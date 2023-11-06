@@ -16,7 +16,7 @@ const options = {
             },
         ],
     },
-    apis: ["./routes/users.route.js", "./routes/posts.route.js", "./routes/users.route.js"], //Swagger 파일 연동
+    apis: ["./routes/users.route.js", "./routes/posts.route.js", "./routes/comments.route.js"], //Swagger 파일 연동
 }
 const specs = swaggerJsdoc(options);
 

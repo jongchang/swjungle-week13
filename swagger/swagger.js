@@ -12,7 +12,7 @@ const options = {
         },
         servers: [
             {
-                url: "http://127.0.0.1:3018", //요청 URL
+                url: "http://52.79.105.38:3000", //요청 URL
             },
         ],
     },

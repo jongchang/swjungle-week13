@@ -5,7 +5,7 @@ const postsRouter = require("./routes/posts.route");
 const commentsRouter = require("./routes/comments.route");
 
 const app = express();
-const PORT = 3018;
+const PORT = 3000;
 
 app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
@@ -17,6 +17,10 @@ app.use('/api', [usersRouter, postsRouter, commentsRouter]);
 const { swaggerUi, specs } = require("./swagger/swagger");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
 
 app.listen(PORT, () => {
     console.log(PORT, '포트 번호로 서버가 실행되었습니다.');

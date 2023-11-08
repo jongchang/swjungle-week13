@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "hokhmah91",
-    "password": "talgnsfus47",
+    "username": "{userID}",
+    "password": "{userPASSWORD}",
     "database": "db_express_post",
-    "host": "express-database.cqtkrofxu2ek.ap-northeast-2.rds.amazonaws.com",
+    "host": "{ENDPOINT}",
     "dialect": "mysql"
   },
   "test": {
